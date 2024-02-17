@@ -40,29 +40,33 @@ const quizArray = [
 let quizHTML = '';
 
 function generateQuiz() {
+    quizHTML += `
+    <div class='border-b-2 border-blue-800 mb-4'>
+        <h2 class='text-2xl text-black font-medium'>Answer the questions:-</h2>
+    </div>
+    `;
     quizArray.forEach((item, index) => {
         quizHTML += `
-        <h2>Answer the questions:-</h2>
         <label>
-            <p name='question-${index + 1}'>${item.question}</p>
-            <label>
-                <input type="radio" name="quiz-${index}" value='a'>${item.a}
+            <p name='question-${index + 1}' class='text-xl font-semibold my-2 box-border'>${index + 1}. ${item.question}</p>
+            <label class='mr-10 font-semibold text-blue-800 cursor-pointer border-transparent border hover:border-blue-800 rounded checked:bg-black' for='quiz-${index}'>
+                <input type="radio" name="quiz-${index}" value='a' id='quiz-${index}'> ${item.a}
             </label>
-            <label>
-                <input type="radio" name="quiz-${index}" value='b'>${item.b}
+            <label class='mr-10 font-semibold text-blue-800 cursor-pointer border-transparent border hover:border-blue-800 rounded checked:bg-black' for='quiz-${index}'>
+                <input type="radio" name="quiz-${index}" value='b' id='quiz-${index}'> ${item.b}
             </label>
-            <label>
-                <input type="radio" name="quiz-${index}" value='c'>${item.c}
+            <label class='mr-10 font-semibold text-blue-800 cursor-pointer border-transparent border hover:border-blue-800 rounded checked:bg-black' for='quiz-${index}'>
+                <input type="radio" name="quiz-${index}" value='c' id='quiz-${index}'> ${item.c}
             </label>
-            <label>
-                <input type="radio" name="quiz-${index}" value='d'>${item.d}
+            <label class='mr-10 font-semibold text-blue-800 cursor-pointer border-transparent border hover:border-blue-800 rounded checked:bg-black' for='quiz-${index}'>
+                <input type="radio" name="quiz-${index}" value='d' id='quiz-${index}'> ${item.d}
             </label>
         </label>
         
         `;
     
     });
-    quizHTML += '<p><button class="js-submit-btn">Submit</button></p>';
+    quizHTML += '<p><button class="js-submit-btn bg-blue-800 text-white mt-4 w-20 rounded-full hover:bg-blue-900">Submit</button></p>';
     
     document.querySelector('.js-quiz-content')
         .innerHTML = quizHTML;
@@ -107,27 +111,30 @@ function checkAnswers() {
 
 function afterAnswer() {
     quizHTML = `
-    <h1> Congratulations for successfully completing the quiz.</h1>
-    <h2>You have answered ${totalCorrectAnswer} questions correctly.</h2>
+    <div class='border-b-2 border-blue-800 mb-4 box-border'>
+        <h1 class='text-2xl text-black font-medium'> Congratulations for successfully completing the quiz.
+        </h1>
+    </div>
+    <h2 class='text-xl font-semibold my-2 box-border'>You have answered ${totalCorrectAnswer} questions correctly.</h2>
     
     `;
     if (userAnsnwer.length !== totalCorrectAnswer) {
         quizHTML += `
-                <h3>Here are some question you didn't answer correctly.</h3>
+                <h3 class='text-xl font-medium my-2 box-border'>Here are some question you didn't answer correctly.</h3>
                 `;
         userAnsnwer.forEach((item, index) => {
             if (item.answer === 'Wrong'){
                 quizHTML += `
-                <p>${item.question}</p>
-                <button class='js-check-answer-btn' data-index='${index}'>Check Answer</button>
-                <p class='js-check-answer' data-index='${index}'></p>
+                <p class='text-xl font-semibold my-2 box-border'>${index + 1}. ${item.question}</p>
+                <button class='js-check-answer-btn bg-green-600 text-white rounded w-40 hover:bg-green-800' data-index='${index}'>Check Answer</button>
+                <span class='js-check-answer font-bold text-red-600 whitespace-normal' data-index='${index}'></span>
                 `;
                 
             }
             
         });
         quizHTML += `
-            <button class='js-go-back'>Go Back to Asnwer Questions</button>
+            <button class='js-go-back block bg-blue-700 hover:bg-blue-800 text-white min-w-40 w-2/4 mt-2 rounded box-border'>Go Back to Asnwer Questions</button>
         `;
 
         document.querySelector('.js-quiz-content')
